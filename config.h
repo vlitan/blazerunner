@@ -8,3 +8,4 @@ const int turnDelayMs = 100;
 const int maxDistance = 15;
 const int lowThreshold = 5; 
 const int highThreshold = 7;
+const int sensorDifferenceCompensation = 2;

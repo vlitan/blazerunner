@@ -3,7 +3,7 @@
 //and also general purpose directions
 //TODO backward of rear >>!>!>??!
 typedef enum direction_e{
-  forward = 0,
+  front = 0,
   rear,
   left,
   right
@@ -25,5 +25,5 @@ typedef enum driveDirection_e{
 //used for representing sensor states as boolean values
 //TODO this could also be an enum .. (??)
 const bool blocked = false;
-const bool freeWay = !blocked; // TODO TODO TODO change name
+const bool freeToGo = !blocked; // TODO TODO TODO change name
 
