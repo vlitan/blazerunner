@@ -2,6 +2,7 @@
 #include "motors.h"
 
 
+
 //sets up pin modes for motor pins
 void setupMotors(){
   pinMode(leftMotorPinA, OUTPUT);
@@ -39,7 +40,7 @@ void drive(driveDirection_t direction){
 //drives in a straightline with a specified speed
 //TODO if the robot is not going straight, adjust here
 void drive(int speed){
-  go(speed, speed);
+  go(speed, speed);//TODO compensate
 }
 //turns 90 degrees to the left / right
 void turn(turnDirection_t direction){
@@ -48,7 +49,7 @@ void turn(turnDirection_t direction){
     case leftTurn: turn(maxSpeed); break;
     case rightTurn: turn(-maxSpeed); break;    
   }
-  delay(turnDelayMs);
+  delay(getCompensatedRotationDelay());
 }
 //turns a specified amount of degrees
 //TODO if it doesn`t turn in place, adjust here.
@@ -58,6 +59,10 @@ void turn(int speed){
 //stops motors
 void stop(){
   go(0, 0);
+}
+
+unsigned int getCompensatedRotationDelay(){
+  return (getBatteryVoltage() * 1 * turnDelayMs);
 }
 
 

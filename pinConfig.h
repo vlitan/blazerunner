@@ -1,7 +1,7 @@
 #pragma once
 
-const int leftMotorPinA = 1;
-const int leftMotorPinB = 1;
+const int leftMotorPinA = 5;
+const int leftMotorPinB = 6;
 const int rightMotorPinA = 1;
 const int rightMotorPinB = 1;
 
@@ -19,7 +19,4 @@ const int rearStateLedPin = 1;
 const int leftStateLedPin = 1;
 const int rightStateLedPin = 1;
 
-const int frontChoiceLedPin = 1;
-const int rearChoiceLedPin = 1;
-const int leftChoiceLedPin = 1;
-const int rightChoiceLedPin = 1;
+const int batteryPin = A6;

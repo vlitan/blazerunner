@@ -9,3 +9,5 @@ const int maxDistance = 15;
 const int lowThreshold = 5; 
 const int highThreshold = 7;
 const int sensorDifferenceCompensation = 2;
+
+const float lowVoltageThreshold = 100;//TODO

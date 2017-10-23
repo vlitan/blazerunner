@@ -7,16 +7,10 @@ int distances[4];
 bool sensorStates[4];
 
 void setup() {
-  // put your setup code here, to run once:
-  setupStateLeds();
-  sensorStates[rear]= 10;
-  sensorStates[left] = 23;
-  sensorStates[front] = 2;
-  sensorStates[right] = 33;
+ setupMotors();
 }
 
 void loop() {
-  displayDistances(distances);
+  drive(maxSpeed);
   delay(100);
-  distances[front] ++;
 }
