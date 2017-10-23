@@ -14,9 +14,9 @@ const int startModulePin = 1;
 
 const int directionSwitchPin = 1;
 
-const int frontStateLedPin = 1;
-const int rearStateLedPin = 1;
-const int leftStateLedPin = 1;
-const int rightStateLedPin = 1;
+const int frontSonarStateLedPin = 1;
+const int rearSonarStateLedPin = 1;
+const int leftSonarStateLedPin = 1;
+const int rightSonarStateLedPin = 1;
 
 const int batteryPin = A6;
