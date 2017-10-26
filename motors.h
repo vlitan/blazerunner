@@ -19,6 +19,4 @@ void turn(turnDirection_t turn);
 void turn(int speed);
 //stops motors
 void stop();
-//
-unsigned int getCompensatedRotationDelay();
 

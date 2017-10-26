@@ -2,8 +2,8 @@
 
 const int leftMotorPinA = 5;
 const int leftMotorPinB = 6;
-const int rightMotorPinA = 1;
-const int rightMotorPinB = 1;
+const int rightMotorPinA = 9;
+const int rightMotorPinB = 3;
 
 const int frontSensorPin = 5;
 const int rearSensorPin = 6;

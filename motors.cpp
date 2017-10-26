@@ -49,7 +49,7 @@ void turn(turnDirection_t direction){
     case leftTurn: turn(maxSpeed); break;
     case rightTurn: turn(-maxSpeed); break;    
   }
-  delay(getCompensatedRotationDelay());
+  //TODO 
 }
 //turns a specified amount of degrees
 //TODO if it doesn`t turn in place, adjust here.
@@ -61,8 +61,5 @@ void stop(){
   go(0, 0);
 }
 
-unsigned int getCompensatedRotationDelay(){
-  return (getBatteryVoltage() * 1 * turnDelayMs);
-}
 
 
