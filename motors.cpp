@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "motors.h"
-
-
+#include "startModule.h"
+volatile bool motorsEnabled;
 
 //sets up pin modes for motor pins
 void setupMotors(){
@@ -9,25 +9,35 @@ void setupMotors(){
   pinMode(leftMotorPinB, OUTPUT);
   pinMode(rightMotorPinA, OUTPUT);
   pinMode(rightMotorPinB, OUTPUT);
+  motorsEnabled = true;
+  stop();
 }
 //applies speeds to motors
 //TODO not the best code, copy-pasted. refactor
 void go(int speedLeft, int speedRight){
-  if (speedLeft > 0) {
-    analogWrite(leftMotorPinA, speedLeft);
-    analogWrite(leftMotorPinB, 0);
-  } 
-  else {
-    analogWrite(leftMotorPinA, 0);
-    analogWrite(leftMotorPinB, -speedLeft);
+  if (!stoped()){//check start/stopModule
+    if (speedLeft > 0) {
+      analogWrite(leftMotorPinA, speedLeft);
+      analogWrite(leftMotorPinB, 0);
+    } 
+    else {
+      analogWrite(leftMotorPinA, 0);
+      analogWrite(leftMotorPinB, -speedLeft);
+    }
+   
+    if (speedRight > 0) {
+      analogWrite(rightMotorPinA, speedRight);
+      analogWrite(rightMotorPinB, 0);
+    }else {
+      analogWrite(rightMotorPinA, 0);
+      analogWrite(rightMotorPinB, -speedRight);
+    }
   }
- 
-  if (speedRight > 0) {
-    analogWrite(rightMotorPinA, speedRight);
-    analogWrite(rightMotorPinB, 0);
-  }else {
-    analogWrite(rightMotorPinA, 0);
-    analogWrite(rightMotorPinB, -speedRight);
+  else{
+      analogWrite(leftMotorPinB, 0);
+      analogWrite(leftMotorPinA, 0);
+      analogWrite(rightMotorPinB, 0);
+      analogWrite(rightMotorPinA, 0);
   }
 }
 //goes in a specified direction (forward or backwards)

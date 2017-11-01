@@ -19,6 +19,16 @@ void setupDisplay(){
   lcd.backlight(); //open the backlight 
   lcd.print("asd");
 }
+void displayYPR(float yaw, float pitch, float roll){
+  lcd.clear();
+  lcd.setCursor(0,1);
+  lcd.print("y:");
+  lcd.print((int)yaw);
+  lcd.print(" p:");
+  lcd.print((int)pitch);
+  lcd.print(" r:");
+  lcd.print((int)roll);
+}
 
 bool changedDistances(int distances[4], int lastDistances[4]){
   for(int i = 0; i < 4; i++){
@@ -32,7 +42,7 @@ bool changedDistances(int distances[4], int lastDistances[4]){
 void displayDistances(int distances[4]){
   if (changedDistances(distances, lastDistances)){
       lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
-      
+
       lcd.print("FRNT:");
       lcd.print(distances[front]);
       lcd.setCursor(9, 0);
@@ -54,5 +64,11 @@ void displayDistances(int distances[4]){
       }
   }
  
+}
+
+void displayMessage(const char * msg){
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(msg);
 }
 

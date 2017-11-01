@@ -237,6 +237,7 @@ void mpu_setup(int x_off, int y_off, int z_off,int z_accel) {
 
         // get expected DMP packet size for later comparison
         packetSize = mpu.dmpGetFIFOPacketSize();
+
     } else {
         // ERROR!
         // 1 = initial memory load failed
@@ -259,10 +260,14 @@ void update_ypr(float *yaw, float *pitch, float *roll)
 {
       // if programming failed, don't try to do anything
     if (!dmpReady) return;
-
+        #ifdef SERIAL_DEBUG
+          Serial.println(packetSize);
+        #endif
     // wait for MPU interrupt or extra packet(s) available
     while (!mpuInterrupt && fifoCount < packetSize);
-
+          #ifdef SERIAL_DEBUG
+          Serial.println(F("2"));
+        #endif
     // reset interrupt flag and get INT_STATUS byte
     mpuInterrupt = false;
     mpuIntStatus = mpu.getIntStatus();
