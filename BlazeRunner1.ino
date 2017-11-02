@@ -6,8 +6,8 @@
 #include "startModule.h"
 #include "switches.h"
 
-bool sensorStates[4];
-int distances[4];
+bool  sensorStates[4];
+int   distances[4];
 float yaw;
 float pitch;
 float roll;
@@ -15,89 +15,82 @@ strategy_t strategy;
 
 void setup() {
   Serial.begin(9600);
- setupMotors();
- mpu_setup(220, 76, -85, 1788);
- setupDisplay();
- setupSensors();
- setupStartModule();
- setupSwitches();
- displayMessage("waiting for start");
- busyWaitForStart();
- strategy = getStrategy();
-
- turn(rightTurn);
- while(1);
+  setupMotors();
+  mpu_setup(220, 76, -85, 1788);
+  setupDisplay();
+  setupSensors();
+  setupStartModule();
+  setupSwitches();
+  displayMessage("waiting for start");
+  busyWaitForStart();
+  strategy = getStrategy();
 }
 
 void loop() {
-  //turn(leftTurn);
-      //check gyro
-    update_ypr(&yaw, &pitch, &roll);
-    displayYPR((int)yaw, (int)pitch, (int)roll);
-    //delay(1);
-//    
-//  if (!stopped()){
-//    switch(strategy){
-//      case testStrat: runTest(); break;
-//      case rightWallFollowerStrat: wallFollower(rightTurn); break;
-//      case leftWallFollowerStrat: wallFollower(leftTurn); break;
-//      case decisionArrayStrat: runDecisionArray(); break;
-//      default : runDefault();
+//    if (!stopped()){
+//      switch(strategy){
+//        case testStrat: runTest(); break;
+//        case rightWallFollowerStrat: wallFollower(rightTurn); break;
+//        case leftWallFollowerStrat: wallFollower(leftTurn); break;
+//        case decisionArrayStrat: runDecisionArray(); break;
+//        default : runDefault();
+//      }
 //    }
-//  }
-//  else{
-//    stop();
-//    displayMessage("stopped");
-//    delay(100);
-//  }
+//    else{
+//      stop();
+//      displayMessage("stopped");
+//      delay(100);
+//    }
 }
 
-void runDecisionArray(){
+void runDecisionArray() {
   displayMessage("decision array N/A");
   delay(100);
 }
 
-void wallFollower(turnDirection_t turn){
-  if (turn == rightTurn){
+void wallFollower(turnDirection_t turn) {
+  if (turn == rightTurn) {
     displayMessage("folllow right");
   }
-  else if (turn == leftTurn){
+  else if (turn == leftTurn) {
     displayMessage("folllow left");
   }
-  else{
+  else {
     displayMessage("folllow N/A");
   }
   delay(100);
 }
 
-void runDefault(){
+void runDefault() {
   displayMessage("defaul strat N/A");
   delay(100);
 }
 
-void runTest(){
+void runTest() {
   static int count = 0;
-  if (count < 10){
+  if (count < 10) {
     //check lcd
     displayMessage("Running test");
   }
-  else if (count <= 100){
+  else if (count <= 100) {
     //check gyro
     update_ypr(&yaw, &pitch, &roll);
     displayYPR((int)yaw, (int)pitch, (int)roll);
   }
-  else if(count <= 200){
+  else if (count <= 300) {
     //check sensors
     updateSensorDistances(distances);
-    displayDistances(distances);
+    updateSensorStates(sensorStates, distances);
+    displaySensorStates(sensorStates);
+    //displayDistances(distances);
   }
-  else if(count <= 300){
+  else if (count <= 400) {
     //check motors
     drive(forwardDrive);
   }
   delay(100);
   count++;
-  if (count >= 400){
+  if (count >= 500) {
     stop();
     count = 0;
   }

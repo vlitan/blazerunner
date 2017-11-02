@@ -52,7 +52,7 @@ void drive(driveDirection_t direction){
 //drives in a straightline with a specified speed
 //TODO if the robot is not going straight, adjust here
 void drive(int speed){
-  go(speed, speed);//TODO compensate
+  go(speed - motorSpeedCompesation, speed  - motorSpeedCompesation);//TODO compensate
 }
 //turns 90 degrees to the left / right
 void turn(turnDirection_t direction){
@@ -66,29 +66,20 @@ void turn(turnDirection_t direction){
   update_ypr(&startYaw, &pitch, &roll);
   switch (direction){
     case noTurn: 
-              finalYaw = startYaw;
-              spinFactor = 0;
+              return;
         break;
     case leftTurn:
-              //finalYaw = ((int)startYaw + 90) % 360; 
-              finalYaw = startYaw + 90;
-              offsetComp = 360 * (((int)startYaw + 90) / 360);
               spinFactor = -1;
         break;
     case rightTurn: 
-              //finalYaw = (360 + (int)startYaw - 90) % 360; 
-              finalYaw = (360 + startYaw - 90);
-              offsetComp = 360 * (360 + (int)startYaw - 90) / 360;
               spinFactor = 1;
          break;    
   }
-//  displayYPR((int)startYaw, (int)finalYaw, spinFactor);
-  while (finalYaw > currentYaw){
-    update_ypr(&currentYaw, (float*)0, (float*)0);
-    currentYaw += offsetComp;
+  unsigned long millisFinish = millis() + turnDelayMs;
+  while (millis() < millisFinish){
     turn(maxSpeed * spinFactor);
   }
-      //displayMessage("finished spin");
+  stop();
 }
 //TODO if it doesn`t turn in place, adjust here.
 void turn(int speed){

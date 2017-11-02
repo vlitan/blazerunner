@@ -47,6 +47,16 @@ bool changedDistances(int distances[4], int lastDistances[4]){
   }
   return false;
 }
+
+bool changedStates(bool states[4], bool lastStates[4]){
+  for(int i = 0; i < 4; i++){
+    if (states[i] != lastStates[i]){
+      return true;
+    }
+  }
+  return false;
+}
+
 //displays 4 integer (distances)
 void displayDistances(int distances[4]){
   static int lastDistances[4];
@@ -76,8 +86,8 @@ void displayDistances(int distances[4]){
 }
 
 void displaySensorStates(bool states[4]){
- // if (changedDistances(distances, lastDistances)){
-      lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
+   static bool lastStates[4];
+  if (changedStates(states, lastStates)){
 
       if (states[front]){
         lcd.print("Fr");
@@ -99,10 +109,10 @@ void displaySensorStates(bool states[4]){
       }
       
 
-//      for(int i = 0; i < 4; i++){
-//        lastDistances[i] = distances[i];
-//      }
-//  }
+      for(int i = 0; i < 4; i++){
+        lastStates[i] = states[i];
+      }
+  }
 }
 
 void displayMessage(const char * msg){

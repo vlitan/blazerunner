@@ -6,4 +6,4 @@ void setupDisplay();
 void displayDistances(int distances[4]);
 void displayYPR(int yaw, int pitch, int roll);
 void displayMessage(const char * msg);
-
+void displaySensorStates(bool states[4]);

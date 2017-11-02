@@ -17,6 +17,11 @@ void updateSensorDistances(int distances[4]){
   distances[rear] = rearSonar.ping_cm();
   distances[left] = leftSonar.ping_cm();
   distances[right] = rightSonar.ping_cm();
+  for (int i = 0; i < 4; i++){
+    if (distances[i] == 0){
+      distances[i] = maxDistance;
+    }
+  }
 }
 
 //reads raw data from the array, perfoms hysteresis comparison and updates the states
