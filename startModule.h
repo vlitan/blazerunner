@@ -1,6 +1,6 @@
 #pragma once
 
-void startModuleSetup();
+void setupStartModule();
 void busyWaitForStart();
-bool stoped();
+bool stopped();
 void reset();

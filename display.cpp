@@ -63,7 +63,36 @@ void displayDistances(int distances[4]){
         lastDistances[i] = distances[i];
       }
   }
- 
+}
+
+void displaySensorStates(bool states[4]){
+ // if (changedDistances(distances, lastDistances)){
+      lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
+
+      if (states[front]){
+        lcd.print("Fr");
+      }
+      lcd.setCursor(3, 0);
+
+      if (states[rear]){
+        lcd.print("Re");
+      }
+      lcd.setCursor(6, 0);
+
+      if (states[left]){
+        lcd.print("Le");
+      }
+      lcd.setCursor(9, 0);
+
+      if (states[right]){
+        lcd.print("Ri");
+      }
+      
+
+//      for(int i = 0; i < 4; i++){
+//        lastDistances[i] = distances[i];
+//      }
+//  }
 }
 
 void displayMessage(const char * msg){

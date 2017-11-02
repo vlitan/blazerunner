@@ -15,7 +15,7 @@ void setupMotors(){
 //applies speeds to motors
 //TODO not the best code, copy-pasted. refactor
 void go(int speedLeft, int speedRight){
-  if (!stoped()){//check start/stopModule
+  if (!stopped()){//check start/stopModule
     if (speedLeft > 0) {
       analogWrite(leftMotorPinA, speedLeft);
       analogWrite(leftMotorPinB, 0);

@@ -4,27 +4,65 @@
 #include <LiquidCrystal_I2C.h>
 #include "imu.h"
 #include "startModule.h"
+#include "switches.h"
 
 bool sensorStates[4];
 int distances[4];
 float yaw;
 float pitch;
 float roll;
+strategy_t strategy;
 
 void setup() {
  setupMotors();
  mpu_setup(220, 76, -85, 1788);
  setupDisplay();
  setupSensors();
- startModuleSetup();
+ setupStartModule();
+ setupSwitches();
  displayMessage("waiting for start");
  busyWaitForStart();
+ strategy = getStrategy();
 }
 
 
 
 void loop() {
-  runTest();
+  if (!stopped()){
+    switch(strategy){
+      case testStrat: runTest(); break;
+      case rightWallFollowerStrat: wallFollower(rightTurn); break;
+      case leftWallFollowerStrat: wallFollower(leftTurn); break;
+      case decisionArrayStrat: runDecisionArray(); break;
+      default : runDefault();
+    }
+  }
+  else{
+    stop();
+  }
+}
+
+void runDecisionArray(){
+  displayMessage("decision array N/A");
+  delay(100);
+}
+
+void wallFollower(turnDirection_t turn){
+  if (turn == rightTurn){
+    displayMessage("folllow right");
+  }
+  else if (turn == leftTurn){
+    displayMessage("folllow left");
+  }
+  else{
+    displayMessage("folllow N/A");
+  }
+  delay(100);
+}
+
+void runDefault(){
+  displayMessage("defaul strat N/A");
+  delay(100);
 }
 
 void runTest(){

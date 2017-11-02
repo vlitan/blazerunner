@@ -5,14 +5,14 @@
 #include "display.h"
 extern volatile bool motorsEnabled;
 
-void startModuleSetup(){
+void setupStartModule(){
   pinMode(startModulePin, INPUT);
   //attachInterrupt(digitalPinToInterrupt(startModulePin), reset, FALLING);
 }
 void busyWaitForStart(){
-  while(stoped());
+  while(stopped());
 }
-bool stoped(){
+bool stopped(){
   return (!digitalRead(startModulePin));
 }
 //not working

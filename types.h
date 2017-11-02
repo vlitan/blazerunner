@@ -22,6 +22,13 @@ typedef enum driveDirection_e{
   backwardDrive
 } driveDirection_t;
 
+typedef enum strategy_e{
+  testStrat,
+  rightWallFollowerStrat,
+  leftWallFollowerStrat,
+  decisionArrayStrat
+} strategy_t;
+
 //used for representing sensor states as boolean values
 //TODO this could also be an enum .. (??)
 const bool blocked = false;
