@@ -111,8 +111,12 @@ void displaySensorStates(bool states[4]){
 }
 
 void displayMessage(const char * msg){
-  lcd.clear();
-  lcd.setCursor(0, 1);
-  lcd.print(msg);
+  static char lastMsg[20];
+  if (strcmp(lastMsg, msg) != 0){
+    lcd.clear();
+    lcd.setCursor(0, 1);
+    lcd.print(msg);
+    strcmp(lastMsg, msg);
+  }
 }
 

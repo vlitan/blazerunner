@@ -2,7 +2,7 @@
 
 const int maxSpeed = 255;
 const int turnDelayMs = 1095;
-
+const int driveAfterTurnDelayMs = 2000;
 //configure sonar sensors and decision levels.
 //TODO change those accordingly
 const int maxDistance = 25;

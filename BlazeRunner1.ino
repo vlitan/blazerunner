@@ -24,6 +24,8 @@ void setup() {
   displayMessage("waiting for start");
   busyWaitForStart();
   strategy = getStrategy();
+  turn(rightTurn);
+  while(1);
 }
 
 void loop() {
@@ -48,11 +50,33 @@ void runDecisionArray() {
   delay(100);
 }
 
-void wallFollower(turnDirection_t turn) {
-  if (turn == rightTurn) {
+void wallFollower(turnDirection_t defaultTurn) {
+  if (defaultTurn == rightTurn) {
     displayMessage("folllow right");
+    updateSensorDistances(distances);
+    updateSensorStates(sensorStates, distances);
+    if (sensorStates[right] == freeToGo){
+      displayMessage("turning right");
+      turnThenDrive(rightTurn, forwardDrive);
+    }
+    else if(sensorStates[front] == freeToGo){
+      displayMessage("going forward");
+      drive(forwardDrive);
+    }
+    else if(sensorStates[left] == freeToGo){
+      displayMessage("turning left");
+      turnThenDrive(leftTurn, forwardDrive);
+    }
+    else if(sensorStates[rear] == freeToGo){
+      displayMessage("turning around");
+      turn(roundTurn);
+    }
+    else{
+      stop();
+      displayMessage("WTF");
+    }
   }
-  else if (turn == leftTurn) {
+  else if (defaultTurn == leftTurn) {
     displayMessage("folllow left");
   }
   else {
@@ -80,9 +104,7 @@ void runTest() {
   else if (count <= 300) {
     //check sensors
     updateSensorDistances(distances);
-    updateSensorStates(sensorStates, distances);
-    displaySensorStates(sensorStates);
-    //displayDistances(distances);
+    displayDistances(distances);
   }
   else if (count <= 400) {
     //check motors

@@ -24,6 +24,10 @@ void updateSensorDistances(int distances[4]){
   }
 }
 
+//void initSensors(int distances[4]){
+//  
+//}
+
 //reads raw data from the array, perfoms hysteresis comparison and updates the states
 void updateSensorStates(bool states[4], int distances[4]){
   for (int i = 0; i < 4; i++){
@@ -36,7 +40,7 @@ bool getNextState(int currentValue, bool lastState){
   if ((currentValue < lowThreshold) && (lastState == freeToGo)){
     return (blocked);
   }
-  else if ((currentValue < highThreshold) && (lastState == blocked)){
+  else if ((currentValue > highThreshold) && (lastState == blocked)){
     return (freeToGo);
   }
   return (lastState);

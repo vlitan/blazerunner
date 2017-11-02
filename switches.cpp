@@ -10,7 +10,7 @@ void  setupSwitches(){
 }
 
 strategy_t getStrategy(){
-  int nr = digitalRead(oneSwitchPin) << 1 | digitalRead(secondSwitchPin);
+  int nr = digitalRead(secondSwitchPin) << 1 | digitalRead(oneSwitchPin);
   switch(nr){
     case 0: return testStrat;
     case 1: return rightWallFollowerStrat;

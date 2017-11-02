@@ -94,5 +94,17 @@ void stop(){
   go(0, 0);
 }
 
+void turnThenDrive(turnDirection_t turnDirection, driveDirection_t driveDirection){
+  unsigned long millisFinish = millis() + driveAfterTurnDelayMs / 2;
+  while (millis() < millisFinish){
+     drive(driveDirection);
+  }
+  turn(turnDirection);
+  millisFinish = millis() + driveAfterTurnDelayMs;
+  while (millis() < millisFinish){
+     drive(driveDirection);
+  }
+}
+
 
 
