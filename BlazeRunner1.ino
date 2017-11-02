@@ -14,6 +14,7 @@ float roll;
 strategy_t strategy;
 
 void setup() {
+  Serial.begin(9600);
  setupMotors();
  mpu_setup(220, 76, -85, 1788);
  setupDisplay();
@@ -23,23 +24,32 @@ void setup() {
  displayMessage("waiting for start");
  busyWaitForStart();
  strategy = getStrategy();
+
+ turn(rightTurn);
+ while(1);
 }
 
-
-
 void loop() {
-  if (!stopped()){
-    switch(strategy){
-      case testStrat: runTest(); break;
-      case rightWallFollowerStrat: wallFollower(rightTurn); break;
-      case leftWallFollowerStrat: wallFollower(leftTurn); break;
-      case decisionArrayStrat: runDecisionArray(); break;
-      default : runDefault();
-    }
-  }
-  else{
-    stop();
-  }
+  //turn(leftTurn);
+      //check gyro
+    update_ypr(&yaw, &pitch, &roll);
+    displayYPR((int)yaw, (int)pitch, (int)roll);
+    //delay(1);
+//    
+//  if (!stopped()){
+//    switch(strategy){
+//      case testStrat: runTest(); break;
+//      case rightWallFollowerStrat: wallFollower(rightTurn); break;
+//      case leftWallFollowerStrat: wallFollower(leftTurn); break;
+//      case decisionArrayStrat: runDecisionArray(); break;
+//      default : runDefault();
+//    }
+//  }
+//  else{
+//    stop();
+//    displayMessage("stopped");
+//    delay(100);
+//  }
 }
 
 void runDecisionArray(){
@@ -74,7 +84,7 @@ void runTest(){
   else if (count <= 100){
     //check gyro
     update_ypr(&yaw, &pitch, &roll);
-    displayYPR(yaw, pitch, roll);
+    displayYPR((int)yaw, (int)pitch, (int)roll);
   }
   else if(count <= 200){
     //check sensors

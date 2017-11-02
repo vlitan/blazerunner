@@ -26,7 +26,8 @@ typedef enum strategy_e{
   testStrat,
   rightWallFollowerStrat,
   leftWallFollowerStrat,
-  decisionArrayStrat
+  decisionArrayStrat,
+  noStrat
 } strategy_t;
 
 //used for representing sensor states as boolean values

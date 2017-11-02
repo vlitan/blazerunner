@@ -11,7 +11,6 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 char array1[]=" SunFounder               "; //the string to print on the LCD
 char array2[]="hello, world!             "; //the string to print on the LCD
 int tim = 500; //the value of delay time
-int lastDistances[4];
 
 //intializes pins and the dispaly
 void setupDisplay(){
@@ -19,15 +18,25 @@ void setupDisplay(){
   lcd.backlight(); //open the backlight 
   lcd.print("asd");
 }
-void displayYPR(float yaw, float pitch, float roll){
-  lcd.clear();
-  lcd.setCursor(0,1);
-  lcd.print("y:");
-  lcd.print((int)yaw);
-  lcd.print(" p:");
-  lcd.print((int)pitch);
-  lcd.print(" r:");
-  lcd.print((int)roll);
+void displayYPR(int yaw, int pitch, int roll){
+  static int lastYaw;
+  static int lastPitch;
+  static int lastRoll;
+  
+  if ((lastYaw != yaw) || (lastPitch != pitch) || (lastRoll != roll)){
+    lcd.clear();
+    lcd.setCursor(0,1);
+    lcd.print("y:");
+    lcd.print((int)yaw);
+    lcd.print(" p:");
+    lcd.print((int)pitch);
+    lcd.print(" r:");
+    lcd.print((int)roll);
+    
+    lastYaw = yaw;
+    lastPitch = pitch;
+    lastRoll = roll;
+  }
 }
 
 bool changedDistances(int distances[4], int lastDistances[4]){
@@ -40,6 +49,7 @@ bool changedDistances(int distances[4], int lastDistances[4]){
 }
 //displays 4 integer (distances)
 void displayDistances(int distances[4]){
+  static int lastDistances[4];
   if (changedDistances(distances, lastDistances)){
       lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
 
