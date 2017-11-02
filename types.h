@@ -13,7 +13,8 @@ typedef enum direction_e{
 typedef enum turnDirection_e{
   noTurn,
   leftTurn,
-  rightTurn
+  rightTurn,
+  roundTurn
 } turnDirection_t;
 
 //used for representing driving directions
@@ -29,6 +30,11 @@ typedef enum strategy_e{
   decisionArrayStrat,
   noStrat
 } strategy_t;
+
+//typedef struct eventDecision_s{
+//  bool states[4];
+//  
+//} eventDecision_t;
 
 //used for representing sensor states as boolean values
 //TODO this could also be an enum .. (??)

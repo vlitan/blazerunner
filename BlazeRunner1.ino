@@ -27,20 +27,20 @@ void setup() {
 }
 
 void loop() {
-//    if (!stopped()){
-//      switch(strategy){
-//        case testStrat: runTest(); break;
-//        case rightWallFollowerStrat: wallFollower(rightTurn); break;
-//        case leftWallFollowerStrat: wallFollower(leftTurn); break;
-//        case decisionArrayStrat: runDecisionArray(); break;
-//        default : runDefault();
-//      }
-//    }
-//    else{
-//      stop();
-//      displayMessage("stopped");
-//      delay(100);
-//    }
+    if (!stopped()){
+      switch(strategy){
+        case testStrat: runTest(); break;
+        case rightWallFollowerStrat: wallFollower(rightTurn); break;
+        case leftWallFollowerStrat: wallFollower(leftTurn); break;
+        case decisionArrayStrat: runDecisionArray(); break;
+        default : runDefault();
+      }
+    }
+    else{
+      stop();
+      displayMessage("stopped");
+      delay(100);
+    }
 }
 
 void runDecisionArray() {

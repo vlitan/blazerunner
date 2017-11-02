@@ -7,11 +7,6 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); 
 
-//////////////////////////
-char array1[]=" SunFounder               "; //the string to print on the LCD
-char array2[]="hello, world!             "; //the string to print on the LCD
-int tim = 500; //the value of delay time
-
 //intializes pins and the dispaly
 void setupDisplay(){
   lcd.init(); //initialize the lcd
@@ -86,7 +81,7 @@ void displayDistances(int distances[4]){
 }
 
 void displaySensorStates(bool states[4]){
-   static bool lastStates[4];
+  static bool lastStates[4];
   if (changedStates(states, lastStates)){
 
       if (states[front]){

@@ -56,14 +56,15 @@ void drive(int speed){
 }
 //turns 90 degrees to the left / right
 void turn(turnDirection_t direction){
-  float startYaw;
-  float finalYaw;
-  float currentYaw;
-  float pitch;
-  float roll;
-  int spinFactor;
+//  float startYaw;
+//  float finalYaw;
+//  float currentYaw;
+//  float pitch;
+//  float roll;
+  int spinFactor = 1;
+  int timeFactor = 1;
   
-  update_ypr(&startYaw, &pitch, &roll);
+  //update_ypr(&startYaw, &pitch, &roll);
   switch (direction){
     case noTurn: 
               return;
@@ -73,9 +74,12 @@ void turn(turnDirection_t direction){
         break;
     case rightTurn: 
               spinFactor = 1;
-         break;    
+         break;
+    case roundTurn:
+              timeFactor = 2;
+         break;  
   }
-  unsigned long millisFinish = millis() + turnDelayMs;
+  unsigned long millisFinish = millis() + turnDelayMs * timeFactor;
   while (millis() < millisFinish){
     turn(maxSpeed * spinFactor);
   }
