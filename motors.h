@@ -18,7 +18,7 @@ void turn(turnDirection_t turn);
 //turns in place with a speed.
 void turn(int speed);
 //
-void turnThenDrive(turnDirection_t turnDirection, driveDirection_t driveDirection);
+void driveTurnDrive(turnDirection_t turnDirection, driveDirection_t driveDirection);
 //stops motors
 void stop();
 

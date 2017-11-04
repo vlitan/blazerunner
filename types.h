@@ -31,10 +31,19 @@ typedef enum strategy_e{
   noStrat
 } strategy_t;
 
-//typedef struct eventDecision_s{
-//  bool states[4];
-//  
-//} eventDecision_t;
+typedef enum action_e{
+  forwardAction,
+  turnRightAction,
+  turnLeftAction,
+  dtdRightAction,
+  dtdLeftAction,
+  roundTurnAction
+} action_t;
+
+typedef struct eventDecision_s{
+  bool states[4];
+  action_t action;
+} eventDecision_t;
 
 //used for representing sensor states as boolean values
 //TODO this could also be an enum .. (??)

@@ -17,11 +17,11 @@ void updateSensorDistances(int distances[4]){
   distances[rear] = rearSonar.ping_cm();
   distances[left] = leftSonar.ping_cm();
   distances[right] = rightSonar.ping_cm();
-  for (int i = 0; i < 4; i++){
-    if (distances[i] == 0){
-      distances[i] = maxDistance;
-    }
-  }
+//  for (int i = 0; i < 4; i++){
+//    if (distances[i] == 0){
+//      distances[i] = maxDistance;
+//    }
+//  }
 }
 
 //void initSensors(int distances[4]){
@@ -44,5 +44,12 @@ bool getNextState(int currentValue, bool lastState){
     return (freeToGo);
   }
   return (lastState);
+}
+
+bool getState(int distance){
+  if (distance < singleThreshold){
+    return (blocked);
+  }
+  return (freeToGo);
 }
 

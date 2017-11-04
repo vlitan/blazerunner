@@ -13,6 +13,17 @@ float pitch;
 float roll;
 strategy_t strategy;
 
+extern NewPing frontSonar;
+extern NewPing rearSonar;
+extern NewPing leftSonar;
+extern NewPing rightSonar;
+
+eventDecision_t decisions[100] = 
+{// front       rear      left      right  
+  {{freeToGo, freeToGo, freeToGo, freeToGo}, forwardAction},
+  {{freeToGo, freeToGo, freeToGo, blocked}, turnLeftAction}
+};
+
 void setup() {
   Serial.begin(9600);
   setupMotors();
@@ -24,8 +35,6 @@ void setup() {
   displayMessage("waiting for start");
   busyWaitForStart();
   strategy = getStrategy();
-  turn(rightTurn);
-  while(1);
 }
 
 void loop() {
@@ -47,27 +56,38 @@ void loop() {
 
 void runDecisionArray() {
   displayMessage("decision array N/A");
-  delay(100);
+  static int decisionIndex = 0;
+  
+  updateSensorDistances(distances);
+  updateSensorStates(sensorStates, distances);
+  if(decisionMatch(decisions[decisionIndex].states, sensorStates)){
+    switch(decisions[decisionIndex].action){
+      case forwardAction:   drive(forwardDrive); break;
+      case turnRightAction: turn(rightTurn); break;
+      case turnLeftAction:  turn(leftTurn); break;
+      case dtdRightAction:  driveTurnDrive(rightTurn, forwardDrive); break;
+      case dtdLeftAction:   driveTurnDrive(leftTurn, forwardDrive); break;
+      case roundTurnAction: turn(roundTurn); break;
+    }
+  }
 }
 
 void wallFollower(turnDirection_t defaultTurn) {
   if (defaultTurn == rightTurn) {
-    displayMessage("folllow right");
-    updateSensorDistances(distances);
-    updateSensorStates(sensorStates, distances);
-    if (sensorStates[right] == freeToGo){
+    //displayMessage("folllow right");
+    if (getState(NewPing::convert_cm(rightSonar.ping_median(2))) == freeToGo){
       displayMessage("turning right");
-      turnThenDrive(rightTurn, forwardDrive);
+      driveTurnDrive(rightTurn, forwardDrive);
     }
-    else if(sensorStates[front] == freeToGo){
+    else if(getState(NewPing::convert_cm(frontSonar.ping_median(2))) == freeToGo){
       displayMessage("going forward");
       drive(forwardDrive);
     }
-    else if(sensorStates[left] == freeToGo){
-      displayMessage("turning left");
-      turnThenDrive(leftTurn, forwardDrive);
+    else if(getState(NewPing::convert_cm(leftSonar.ping_median(2))) == freeToGo){
+      displayMessage("tight turn left");
+      turn(leftTurn);
     }
-    else if(sensorStates[rear] == freeToGo){
+    else if(getState(NewPing::convert_cm(rearSonar.ping_median(2))) == freeToGo){
       displayMessage("turning around");
       turn(roundTurn);
     }
@@ -77,12 +97,30 @@ void wallFollower(turnDirection_t defaultTurn) {
     }
   }
   else if (defaultTurn == leftTurn) {
-    displayMessage("folllow left");
+    if (getState(NewPing::convert_cm(leftSonar.ping_median(2))) == freeToGo){
+      displayMessage("turning left");
+      driveTurnDrive(leftTurn, forwardDrive);
+    }
+    else if(getState(NewPing::convert_cm(frontSonar.ping_median(2))) == freeToGo){
+      displayMessage("going forward");
+      drive(forwardDrive);
+    }
+    else if(getState(NewPing::convert_cm(rightSonar.ping_median(2))) == freeToGo){
+      displayMessage("tight turn right");
+      turn(rightTurn);
+    }
+    else if(getState(NewPing::convert_cm(rearSonar.ping_median(2))) == freeToGo){
+      displayMessage("turning around");
+      turn(roundTurn);
+    }
+    else{
+      stop();
+      displayMessage("WTF");
+    }
   }
   else {
     displayMessage("folllow N/A");
   }
-  delay(100);
 }
 
 void runDefault() {
@@ -116,5 +154,15 @@ void runTest() {
     stop();
     count = 0;
   }
+}
+
+
+bool decisionMatch(bool actualStates[4], bool targetStates[4]){
+  for (int i = 0;i < 4; i++){
+    if (actualStates[i] != targetStates[i]){
+      return false;
+    }
+  }
+  return true;
 }
 

@@ -15,4 +15,5 @@ void updateSensorStates(bool states[4], int distances[4]);
 //given the current value and the last state, based on the Thresholds defined in config.h computes next state
 bool getNextState(int currentValue, bool lastState);
 
+bool getState(int distance);
 #endif
