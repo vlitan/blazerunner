@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "motors.h"
 #include "startModule.h"
-#include "imu.h"
 #include "display.h"
 volatile bool motorsEnabled;
 
@@ -52,7 +51,7 @@ void drive(driveDirection_t direction){
 //drives in a straightline with a specified speed
 //TODO if the robot is not going straight, adjust here
 void drive(int speed){
-  go(speed - motorSpeedCompesation, speed  - motorSpeedCompesation);//TODO compensate
+  go(speed, speed);//TODO compensate
 }
 //turns 90 degrees to the left / right
 void turn(turnDirection_t direction){

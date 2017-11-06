@@ -3,7 +3,6 @@
 #include "pinConfig.h"
 #include "types.h"
 #include "config.h"
-#include "batteryChecker.h"
 
 //sets up pin modes for motor pins
 void setupMotors();

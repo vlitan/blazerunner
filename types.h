@@ -27,7 +27,8 @@ typedef enum strategy_e{
   testStrat,
   rightWallFollowerStrat,
   leftWallFollowerStrat,
-  decisionArrayStrat,
+  decisionArrayStratLeft,
+  decisionArrayStratRight,
   noStrat
 } strategy_t;
 
